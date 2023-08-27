@@ -13,10 +13,12 @@ const Layout: React.FC<ILayout> = ({ children }) => {
       <div
         style={{
           background: "white",
-          width: 650,
+          width: 750,
           minHeight: 140,
+          maxHeight: 900,
           borderRadius: 10,
-          padding: 30,
+          paddingTop: 30,
+          paddingBottom: 30,
         }}
       >
         {children}

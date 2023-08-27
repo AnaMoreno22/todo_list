@@ -16,16 +16,31 @@ code {
 }
 
 .add-item {
-  width: 515px;
+  width: 615px;
   height: 30px;
-  border-radius: 10px;
+  border-bottom-left-radius: 10px;
+  border-top-left-radius: 10px;
   border: 1px solid black;
+  border-right: none;
   padding-left: 10px;
   padding-top: 10px;
-  :focus {
-    outline: none !important;
-  }
-  :focus-visible {
-    outline: none !important;
-  }
+}
+
+.add-item-buttom {
+  height: 42px;
+  border-bottom-right-radius: 10px;
+  border-top-right-radius: 10px;
+  border: 1px solid black;
+  border-left: none;
+  padding-top: 4px;
+  background: none;
+  cursor: pointer;
+}
+
+.add-item:focus-visible {
+  outline: none;
+}
+
+.cursor-pointer {
+  cursor: pointer;
 }
