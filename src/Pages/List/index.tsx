@@ -11,17 +11,19 @@ const List: React.FC = () => {
   const [removing, setRemoving] = useState(false);
   const [value, setValue] = useState("");
   function addItem(event: any) {
-    setValue("");
+    const newItemName = event?.target?.new_item?.value.trim() || "";
+    if (newItemName) {
+      setValue("");
 
-    event.preventDefault();
-    const newItemName = event?.target?.new_item?.value || "";
-    const itemAlreadyExists = items.find((item) => item.name === newItemName);
-    if (!itemAlreadyExists) {
-      const newData = [...items, { name: newItemName, checked: false }];
-      setItems(newData);
-      localStorage.setItem("TODOLIST", JSON.stringify(newData));
-    } else {
-      alert("Item has been already saved");
+      event.preventDefault();
+      const itemAlreadyExists = items.find((item) => item.name === newItemName);
+      if (!itemAlreadyExists) {
+        const newData = [...items, { name: newItemName, checked: false }];
+        setItems(newData);
+        localStorage.setItem("TODOLIST", JSON.stringify(newData));
+      } else {
+        alert("Item has been already saved");
+      }
     }
   }
 
@@ -68,45 +70,44 @@ const List: React.FC = () => {
             borderSpacing: 0,
           }}
         >
-          {items.map((item, index) => {
-            return (
-              <tr
+          {items.map((item, index) => (
+            <tr
+              key={item.name}
+              style={{
+                background: index % 2 === 0 ? "#D1D1D1" : "white",
+                height: 40,
+                verticalAlign: "middle",
+              }}
+            >
+              <td width="30px">
+                <input
+                  name="checkbox"
+                  onChange={() => checkItem(item)}
+                  defaultChecked={item.checked}
+                  type="checkbox"
+                />
+              </td>
+              <td
                 style={{
-                  background: index % 2 === 0 ? "#D1D1D1" : "white",
-                  height: 40,
-                  verticalAlign: "middle",
+                  maxWidth: 650,
+                  textOverflow: "ellipsis",
+                  overflow: "hidden",
                 }}
+                width="650px  "
               >
-                <td width="30px">
-                  <input
-                    data-row-id={item.name}
-                    onChange={() => checkItem(item)}
-                    defaultChecked={item.checked}
-                    type="checkbox"
-                  />
-                </td>
-                <td
-                  style={{
-                    maxWidth: 650,
-                    textOverflow: "ellipsis",
-                    overflow: "hidden",
-                  }}
-                  width="650px  "
+                {item.name}
+              </td>
+              <td className="cursor-pointer" width="30px">
+                <button
+                  className="cursor-pointer"
+                  onClick={() => removeItem(item.name)}
+                  style={{ background: "none", border: "none" }}
                 >
-                  {item.name}
-                </td>
-                <td className="cursor-pointer" width="30px">
-                  <button
-                    className="cursor-pointer"
-                    onClick={() => removeItem(item.name)}
-                    style={{ background: "none", border: "none" }}
-                  >
-                    <RemoveIcon />
-                  </button>
-                </td>
-              </tr>
-            );
-          })}
+                  <RemoveIcon />
+                </button>
+              </td>
+            </tr>
+          ))}
         </table>
       </div>
     </>
